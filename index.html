@@ -2,29 +2,32 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>중앙대 AI)PR팀 환경공익광고 효과설문 참여하기</title>
+  <title>중앙대 AI)PR팀 환경공익광고 효과설문</title>
 </head>
 <body>
-  <p>Google Form으로 이동 중입니다...</p>
+  <p>참여해주셔서 감사합니다, 곧 설문지로 연결 됩니다...</p>
 
   <script>
     const links = [
-      "https://buly.kr/FhNlne0",
-      "https://buly.kr/DwEBzUc",
-      "https://buly.kr/Gvn4fMn",
-      "https://buly.kr/FAdUrDH"
+      "https://forms.gle/3vnnTKwc9J6XoVKk8",
+      "https://forms.gle/N2WpMAPNBCXXGtUe6",
+      "https://forms.gle/ovyVtfvtJZrHCk5B6",
+      "https://forms.gle/5zu1rY7cJ37Vz1Ds5"
     ];
 
-    let counts = JSON.parse(localStorage.getItem('formCounts')) || Array(links.length).fill(0);
+    // 고정된 인덱스가 없으면 새로 생성
+    let fixedIndex = localStorage.getItem('fixedSurveyIndex');
+    if (fixedIndex === null) {
+      // 현재 시간 + 랜덤 요소를 섞어 최대한 분산 효과
+      const now = new Date();
+      const seed = now.getTime() + Math.floor(Math.random() * 10000);
+      fixedIndex = seed % links.length;
 
-    const minCount = Math.min(...counts);
-    const candidates = counts.map((c, i) => c === minCount ? i : -1).filter(i => i !== -1);
-    const chosenIndex = candidates[Math.floor(Math.random() * candidates.length)];
+      localStorage.setItem('fixedSurveyIndex', fixedIndex);
+    }
 
-    counts[chosenIndex]++;
-    localStorage.setItem('formCounts', JSON.stringify(counts));
-
-    window.location.href = links[chosenIndex];
+    // 해당 설문 링크로 이동
+    window.location.href = links[fixedIndex];
   </script>
 </body>
 </html>
